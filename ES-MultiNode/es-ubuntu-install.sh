@@ -215,6 +215,14 @@ eval "$config_fetch_cmd"
 sudo cp elasticsearch.nginx.conf /etc/nginx/sites-available/elasticsearch
 sudo ln /etc/nginx/sites-available/elasticsearch /etc/nginx/sites-enabled
 sudo rm /etc/nginx/sites-enabled/default
+
+config_fetch_cmd='curl -s https://raw.githubusercontent.com/nixxcz/azure-diagnostics-tools/master/ES-MultiNode/8080.nginx | perl -wnlp -e s/__ES_DNS_NAME/'
+config_fetch_cmd+="$es_dns_name"
+config_fetch_cmd+='/g > 8080.nginx.conf'
+eval "$config_fetch_cmd"
+sudo cp 8080.nginx.conf /etc/nginx/sites-available/8080
+sudo ln /etc/nginx/sites-available/8080 /etc/nginx/sites-enabled
+
 sudo systemctl reload nginx
 
 
